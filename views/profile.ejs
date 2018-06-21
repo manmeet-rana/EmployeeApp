@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Profile</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style type="text/css">
+      .avatar {
+    vertical-align: middle;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+  </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+  <!-- <a href="#" class="btn btn-info btn-lg">
+          <span class="glyphicon glyphicon-log-out"></span> Log out
+        </a> -->
+    </div>
+    <div class="col-md-6">
+    <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-info btn-lg" style="float: right;">
+          <span class="glyphicon glyphicon-file"></span> Monthly Statement 
+        </button>
+        <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Your Monthly Statement Is Here</h4>
+        </div>
+        <div class="modal-body">
+          <table>
+            <tr>
+              <th>Sr No</th>
+              <th>Emp Name</th>
+              <th>Company_ID</th>
+              <th>Vendor Name</th>
+              <th>Date</th>
+              <th>Debited Amount</th>
+            </tr>
+          <%transaction.forEach(function(transaction,count){%>
+            <tr>
+              <td><%=count+1%></td>
+              <td><%=transaction.emp_name%></td>
+              <td><%=transaction.comp_id%></td>
+              <td><%=transaction.vendor_name%></td>
+              <td><%=transaction.doneAt%></td>
+              <td><%=transaction.debit_amt%></td>
+          <%});%>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+    </div>
+    </div>
+
+  <div class="panel-group">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" href="#collapse1">Pay to Vendors</a>
+        </h4>
+      </div>
+      <div id="collapse1" class="panel-collapse collapse">
+        <ul class="list-group">
+          <% vendor.forEach(function(vendor){ %>
+         <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">Pay to <%=vendor.name%></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" action="/users/pay">
+            <div class="modal-body mx-3">
+
+                <div class="md-form mb-5">
+                    <i class="fa fa-envelope prefix grey-text"></i>
+                    <input type="hidden" value ="<%=user._id%>" name="emp_id">
+          <input type="hidden" value ="<%=user.name%>" name="emp_name">
+          <input type="hidden" value="<%=user.comp_id%>" name="comp_id">
+          <input type="hidden" value="<%=user.balance%>" name="balance">
+          <input type="hidden" name="vendor_name" value = "<%=vendor.name%>">
+          <input type="hidden" name="vendor_id" value = "<%=vendor._id%>">
+                    <input type="Number" id="defaultForm-email" name="debit_amt" class="form-control validate" placeholder="Amount to be paid">
+                </div>
+                <br>
+                <div class="md-form mb-4">
+                    <i class="fa fa-lock prefix grey-text"></i>
+                    <input type="text" id="defaultForm-pass" name="remarks" class="form-control validate" placeholder="Remarks">
+                </div>
+
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button class="btn btn-default">Pay</button>
+            </div>
+          </form>
+        </div>
+    </div>
+</div>
+          <li class="list-group-item"><a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalLoginForm"><%=vendor.name%></a></li>
+          <%});%>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6" style="border-radius:5px;background-color: rgba(227,222,219,0.3);">
+    <div class="col-md-6" >
+        <img src="/images/img_avatar.png" alt="Avatar" class="avatar" >
+    </div>
+    <div class="col-md-6">
+        <h1 style="align-content: center; text-align: center;margin:10%;padding-top: 20%;padding-bottom: 20%;">Hi <br> <%=user.name%></h1>
+    </div>
+</div>
+    <div class="col-md-6" style="">
+        <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Balance</th>
+        <th><%=user.balance %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Email</td>
+        <td><%=user.email %></td>
+      </tr>
+      <tr>
+        <td>Company ID</td>
+        <td><%=user.comp_id %></td>
+      </tr>
+      <tr>
+        <td>Address</td>
+        <td><%=user.addr %></td>
+      </tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+  
+</div>
+   
+</body>
+</html>

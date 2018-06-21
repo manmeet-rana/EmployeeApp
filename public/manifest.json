@@ -1,0 +1,21 @@
+{
+  "short_name": "employee",
+  "name": "employee PWA",
+  "icons": [
+    {
+      "src": "/images/android-icon.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/images/github.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/users/",
+  "background_color": "#3367D6",
+  "display": "standalone",
+  "scope": "/users/",
+  "theme_color": "#3367D6"
+}
